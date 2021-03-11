@@ -1,0 +1,76 @@
+{
+    "vhosts":[
+        {"name":"/"}
+    ],
+    "users": [
+        {
+         "name": "user1",
+         "password_hash": "kI3GCqW5JLMJa4iX1lo7X4D6XbYqlLgxIs30+P6tENUV2POR",
+         "hashing_algorithm": "rabbit_password_hashing_sha256",
+         "tags": "administrator"
+        }
+    ],"permissions": [
+        {
+          "user": "user1",
+          "vhost": "/",
+          "configure": ".*",
+          "write": ".*",
+          "read": ".*"
+        }
+    ],
+    "exchanges": [
+        {
+          "name": "ex-uc-booking-management",
+          "vhost": "/",
+          "type": "fanout",
+          "durable": true,
+          "auto_delete": false,
+          "internal": false,
+          "arguments": {}
+        },
+        {
+            "name": "ex-uc-notifications",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+          }
+      ],
+      "queues": [
+        {
+          "name": "q-uc-booking-status-change",
+          "vhost": "/",
+          "durable": true,
+          "auto_delete": false,
+          "arguments": {}
+        },
+        {
+            "name": "q-uc-notifications",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+          }
+      ],
+      "bindings": [
+        {
+          "source": "ex-uc-booking-management",
+          "vhost": "/",
+          "destination": "q-uc-booking-status-change",
+          "destination_type": "queue",
+          "routing_key": "*",
+          "arguments": {}
+        },
+        {
+            "source": "ex-uc-notifications",
+            "vhost": "/",
+            "destination": "q-uc-notifications",
+            "destination_type": "queue",
+            "routing_key": "*",
+            "arguments": {}
+          }
+      ]
+
+}

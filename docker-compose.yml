@@ -1,0 +1,146 @@
+version: "3"
+
+services:
+  uc-discovery-server:
+    container_name: uc-discovery-server
+    image: sahilmehta02/uc-discovery-server:v1.3
+    ports: 
+        - "8761:8761"  
+    volumes: 
+          - /tmp:/workspace/logs
+    environment:
+        - jaeger_host=uc-distributed-tracing
+  uc-api-gateway:
+    container_name: uc-api-gateway
+    image: sahilmehta02/uc-api-gateway:v1.3
+    ports: 
+          - "8050:8050"
+    links: 
+        - uc-discovery-server:uc-discovery-server  
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - jaeger_host=uc-distributed-tracing        
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-user-management:
+    container_name: uc-user-management
+    image: sahilmehta02/uc-user-management:v1.1
+    ports: 
+         - "8051:8051"
+    links: 
+        - uc-discovery-server:uc-discovery-server  
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - jaeger_host=uc-distributed-tracing        
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-notifications:
+    container_name: uc-notifications
+    image: sahilmehta02/uc-notifications:v1.1
+    ports: 
+         - "8052:8052"
+    links: 
+        - uc-discovery-server:uc-discovery-server
+        - uc-rabbit-mq:uc-rabbit-mq  
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - rabbit_host=uc-rabbit-mq
+        - rabbit_username=user1
+        - rabbit_password=test12
+        - jaeger_host=uc-distributed-tracing         
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-services:
+    container_name: uc-services
+    image: sahilmehta02/uc-services:v1.1
+    ports: 
+         - "8053:8053"
+    links: 
+        - uc-discovery-server:uc-discovery-server
+        - uc-distributed-tracing:uc-distributed-tracing  
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - jaeger_host=uc-distributed-tracing        
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-feedback:
+    container_name: uc-feedback
+    image: sahilmehta02/uc-feedback:v1.1
+    ports: 
+         - "8054:8054"
+    links: 
+        - uc-discovery-server:uc-discovery-server
+        - uc-distributed-tracing:uc-distributed-tracing  
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - jaeger_host=uc-distributed-tracing        
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-booking-management:
+    container_name: uc-booking-management
+    image: sahilmehta02/uc-booking-management:v1.1
+    ports: 
+         - "8055:8055"
+    links: 
+        - uc-discovery-server:uc-discovery-server
+        - uc-rabbit-mq:uc-rabbit-mq 
+        - uc-distributed-tracing:uc-distributed-tracing 
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - rabbit_host=uc-rabbit-mq
+        - rabbit_username=user1
+        - rabbit_password=test12
+        - jaeger_host=uc-distributed-tracing         
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-offers:
+    container_name: uc-offers
+    image: sahilmehta02/uc-offers:v1.1
+    ports: 
+         - "8056:8056"
+    links: 
+        - uc-discovery-server:uc-discovery-server
+        - uc-distributed-tracing:uc-distributed-tracing  
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - jaeger_host=uc-distributed-tracing        
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-payments:
+    container_name: uc-payments
+    image: sahilmehta02/uc-payments:v1.1
+    ports: 
+         - "8057:8057"
+    links: 
+        - uc-discovery-server:uc-discovery-server
+        - uc-rabbit-mq:uc-rabbit-mq
+        - uc-distributed-tracing:uc-distributed-tracing  
+    environment:
+        - discovery_server_url=http://uc-discovery-server:8761/eureka
+        - rabbit_host=uc-rabbit-mq
+        - rabbit_username=user1
+        - rabbit_password=test12
+        - jaeger_host=uc-distributed-tracing       
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-rabbit-mq:
+    container_name: uc-rabbit-mq
+    image: sahilmehta02/uc-rabbit-mq:v1.5
+    ports: 
+         - "15672:15672"
+         - "5672:5672"          
+    volumes: 
+          - /tmp:/workspace/logs
+  uc-distributed-tracing:
+    container_name: uc-distributed-tracing
+    image: jaegertracing/all-in-one:1.7
+    ports: 
+         - "5775:5775/udp"
+         - "6831:6831/udp"
+         - "6832:6832/udp"
+         - "5778:5778"
+         - "16686:16686"
+         - "14268:14268"
+         - "9411:9411"          
+    volumes: 
+          - /tmp:/workspace/logs       
