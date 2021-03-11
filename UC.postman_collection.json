@@ -1,0 +1,1019 @@
+{
+	"info": {
+		"_postman_id": "493d836b-4241-4fda-a12d-f86ef72eb275",
+		"name": "UC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Mangement",
+			"item": [
+				{
+					"name": "Get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8050/uc/user-management/v1/user/1001",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"user-management",
+								"v1",
+								"user",
+								"1001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTQyNzQyMTMsImlzcyI6IlVDQVVUSCIsInN1YiI6IjEwMDIiLCJleHAiOjE2MTQyNzUxMTMsInBpbmNvZGUiOiIxMTAwNDUiLCJyb2xlIjoiU0VSVklDRV9QUk9WSURFUiIsIm1vYmlsZSI6Ijk1ODI4NDMzMDMifQ.L9TKaDfl1lAISWeRc8IdvLER_qyeNH4VRGvfTO5aBwU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Abhi Sharma\",\r\n    \"mobile\": \"9582843304\",\r\n    \"email\": \"abhi@gmail.com\",\r\n    \"role\": \"SERVICE_RECIEVER\",\r\n    \"pincode\": 110045\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/uc/user-management/v1/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"user-management",
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mehtageeta1811@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/uc/user-management/v1/auth/otp",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"user-management",
+								"v1",
+								"auth",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"if(jsonData!==null) {\r",
+									"   pm.environment.set(\"uc-token\", jsonData.token);    \r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sahil.mehta02@nagarro.com\",\r\n    \"otp\": \"9982\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/uc/user-management/v1/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"user-management",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-apiKey",
+								"value": "bf4aryv84hrcq984xp7cefkjhe2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8050/uc/user-management/v1/user/fetch?ids=1002,1001,1003",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"user-management",
+								"v1",
+								"user",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "1002,1001,1003"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Send Mail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "Your OTP is 11112"
+						},
+						"url": {
+							"raw": "localhost:8050/uc/notifications/v1/mail?to=sahil.mehta02@nagarro.com&subject=UC - Login OTP",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"notifications",
+								"v1",
+								"mail"
+							],
+							"query": [
+								{
+									"key": "to",
+									"value": "sahil.mehta02@nagarro.com"
+								},
+								{
+									"key": "subject",
+									"value": "UC - Login OTP"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "service type",
+					"item": [
+						{
+							"name": "Get all service types",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8050/uc/services/v1/type",
+									"host": [
+										"localhost"
+									],
+									"port": "8050",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"type"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get service type",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8050/uc/services/v1/type/3002",
+									"host": [
+										"localhost"
+									],
+									"port": "8050",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"type",
+										"3002"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add service type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Body Massage\",\r\n    \"description\": \"service description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8050/uc/services/v1/type",
+									"host": [
+										"localhost"
+									],
+									"port": "8050",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"type"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Service provider",
+					"item": [
+						{
+							"name": "Get all services by provider",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8050/uc/services/v1/provider",
+									"host": [
+										"localhost"
+									],
+									"port": "8050",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"provider"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get provided service",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									},
+									{
+										"key": "x-apiKey",
+										"value": "bf4aryv84hrcq984xp7cefkjhe2",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8050/uc/services/v1/provider/4001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8050",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"provider",
+										"4001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Provide service",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-role",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"service_type_id\": \"3001\",\r\n    \"fees\": \"100\",\r\n    \"comment\": \"something\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8053/uc/services/v1/provider",
+									"host": [
+										"localhost"
+									],
+									"port": "8053",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"provider"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update provided service",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fees",
+											"value": "1200",
+											"type": "text"
+										},
+										{
+											"key": "comment",
+											"value": "cheap and best",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8053/uc/services/v1/provider/4001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8053",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"provider",
+										"4001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove provided service",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8053/uc/services/v1/provider/4001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8053",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"provider",
+										"4001"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search",
+					"item": [
+						{
+							"name": "search service",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{uc-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8050/uc/services/v1/search?serviceTypeId=3001&pincode=110045",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8050",
+									"path": [
+										"uc",
+										"services",
+										"v1",
+										"search"
+									],
+									"query": [
+										{
+											"key": "serviceTypeId",
+											"value": "3001"
+										},
+										{
+											"key": "pincode",
+											"value": "110045"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Feedbacks",
+			"item": [
+				{
+					"name": "Fetch feedbacks for users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-apiKey",
+								"value": "bf4aryv84hrcq984xp7cefkjhe2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8050/uc/feedbacks/v1/feedback/fetch?forUsers=1002",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"feedbacks",
+								"v1",
+								"feedback",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "forUsers",
+									"value": "1002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"for_user\": \"1002\",\r\n    \"rating\": \"3\",\r\n    \"comment\": \"not satisfactory\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/uc/feedbacks/v1/feedback",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"feedbacks",
+								"v1",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "book service",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"service_id\": \"4000\",\r\n    \"time\": \"10:00\",\r\n    \"date\": \"28-02-2021\",\r\n    \"instructions\": \"do call me 1 hour before coming at my place\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/uc/booking-management/v1/booking",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"booking-management",
+								"v1",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8050/uc/booking-management/v1/booking",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"booking-management",
+								"v1",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8055/uc/booking-management/v1/booking/6001",
+							"host": [
+								"localhost"
+							],
+							"port": "8055",
+							"path": [
+								"uc",
+								"booking-management",
+								"v1",
+								"booking",
+								"6001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm booking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "confirmation",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8055/uc/booking-management/v1/booking/6001/confirm",
+							"host": [
+								"localhost"
+							],
+							"port": "8055",
+							"path": [
+								"uc",
+								"booking-management",
+								"v1",
+								"booking",
+								"6001",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete booking Verify",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "otp",
+									"value": "0777",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8055/uc/booking-management/v1/booking/6001/complete",
+							"host": [
+								"localhost"
+							],
+							"port": "8055",
+							"path": [
+								"uc",
+								"booking-management",
+								"v1",
+								"booking",
+								"6001",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete booking Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "confirmation",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8055/uc/booking-management/v1/booking/6001/complete",
+							"host": [
+								"localhost"
+							],
+							"port": "8055",
+							"path": [
+								"uc",
+								"booking-management",
+								"v1",
+								"booking",
+								"6001",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Offers",
+			"item": [
+				{
+					"name": "Add Offer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"for_email\": \"abhi@gmail.com\",\r\n    \"discount\" : \"10\",\r\n    \"capping\": \"100\",\r\n    \"description\": \"Flat 10% discount for Sunday brunch!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/uc/offers/v1/offer",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"offers",
+								"v1",
+								"offer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get offer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							},
+							{
+								"key": "X-apiKey",
+								"value": "bf4aryv84hrcq984xp7cefkjhe2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8056/uc/offers/v1/offer/7001",
+							"host": [
+								"localhost"
+							],
+							"port": "8056",
+							"path": [
+								"uc",
+								"offers",
+								"v1",
+								"offer",
+								"7001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get offers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8050/uc/offers/v1/offer",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"offers",
+								"v1",
+								"offer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "Get Payment details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8050/uc/payments/v1/payment\\8001",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"payments",
+								"v1",
+								"payment",
+								"8001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{uc-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"booking_id\": \"6002\",\r\n    \"offer_id\": \"7002\",\r\n    \"amount\": \"1000\",\r\n    \"mode_of_payment\": \"UPI\",\r\n    \"details\": \"myupiid@icicibank\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/uc/payments/v1/payment",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"uc",
+								"payments",
+								"v1",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
